@@ -1,5 +1,4 @@
 import streamlit as st
-from ollama_client import ask_ollama
 
 from rubrik_service import (
     get_protected_vms,
@@ -22,7 +21,6 @@ if "messages" not in st.session_state:
 
 # Display previous messages
 for message in st.session_state.messages:
-
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
@@ -31,8 +29,8 @@ question = st.chat_input(
 )
 
 if question:
-    
-st.session_state.messages.append(
+
+    st.session_state.messages.append(
         {
             "role": "user",
             "content": question
@@ -41,19 +39,6 @@ st.session_state.messages.append(
 
     with st.chat_message("user"):
         st.markdown(question)
-
-    with st.chat_message("assistant"):
-    response = ask_ollama(question)
-        st.markdown(response)
-
-    st.session_state.messages.append(
-        {
-            "role": "assistant",
-            "content": response
-        }
-    )
-
-    st.stop()
 
     try:
 
@@ -72,7 +57,7 @@ st.session_state.messages.append(
 
             response = get_protected_vms()
 
-        # Summary
+        # Protection Summary
         elif (
             "summary" in q
             or "health" in q
