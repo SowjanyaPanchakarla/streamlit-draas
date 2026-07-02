@@ -1,4 +1,5 @@
 import streamlit as st
+from ollama_client import ask_ollama
 
 from rubrik_service import (
     get_protected_vms,
@@ -30,8 +31,8 @@ question = st.chat_input(
 )
 
 if question:
-
-    st.session_state.messages.append(
+    
+st.session_state.messages.append(
         {
             "role": "user",
             "content": question
@@ -40,6 +41,19 @@ if question:
 
     with st.chat_message("user"):
         st.markdown(question)
+
+    with st.chat_message("assistant"):
+    response = ask_ollama(question)
+        st.markdown(response)
+
+    st.session_state.messages.append(
+        {
+            "role": "assistant",
+            "content": response
+        }
+    )
+
+    st.stop()
 
     try:
 
