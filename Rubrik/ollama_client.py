@@ -8,7 +8,7 @@ OLLAMA_URL = os.getenv(
 
 MODEL = os.getenv(
     "OLLAMA_MODEL",
-    "phi3:mini"
+    "tinyllama:latest"
 )
 
 
